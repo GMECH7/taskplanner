@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div style="text-align: center;">
+    <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Task</h1>
+
+    <form method="post" style="display: inline-block; text-align: left; width: 400px;">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group" style="margin-bottom: 10px;">
+            <label for="{{ field.id_for_label }}" style="width: 100%; margin-bottom: 5px;">{{ field.label }}</label><br>
+            {{ field }}
+        </div>
+        {% endfor %}
+
+        <div class="btn-group" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a href="{% url 'task' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

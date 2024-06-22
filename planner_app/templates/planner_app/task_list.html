@@ -1,0 +1,48 @@
+{% extends "base.html "%} {% block title %} Task Page (to be deleted){% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Task Matrix</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>
+                    <form method="get" style="display:inline;">
+                        <input type="hidden" name="sort_by_task_category"
+                            value="{% if request.GET.sort_by_task_category == 'category' %}unsorted{% else %}category{% endif %}">
+                        <!-- change between sorted and unsorted -->
+                        <button type="submit" class="btn btn-link"
+                            style="padding:0; border:none; background:none; color:inherit;">Category</button>
+                    </form>
+                </th>
+                <th>Alternative Category</th>
+                <th>Status</th>
+                <th>Date Created</th>
+                <th>Date Closed</th>
+                <th>Actions</th> <!-- New column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description|truncatechars:50 }}</td>
+                <td>{{ task.category }}</td>
+                <td>{{ task.alternative_category|default_if_none:"-" }}</td>
+                <td>{{ task.get_status_display }}</td>
+                <td>{{ task.date_created }}</td>
+                <td>{{ task.date_closed|default_if_none:"-" }}</td>
+                <td>
+                    <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-info">View/Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'task_create' %}" class="btn btn-success mt-3">Add New Task</a>
+</div>
+{% endblock %}

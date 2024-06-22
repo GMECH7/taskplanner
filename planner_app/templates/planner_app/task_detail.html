@@ -1,0 +1,28 @@
+{% extends "base.html "%}
+
+{% block content %}
+<html>
+
+<head>
+    <title>{{ task.title }}</title>
+</head>
+
+<body>
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+    <p>Category: {{ task.category }}</p>
+    {% if task.alternative_category %}
+    <p>Alternative Category: {{ task.alternative_category }}</p>
+    {% endif %}
+    <p>Status: {{ task.get_status_display }}</p>
+    <p>Date Created: {{ task.date_created }}</p>
+    {% if task.date_closed %}
+    <p>Date Closed: {{ task.date_closed }}</p>
+    {% endif %}
+    <a href="{% url 'task_edit' task.pk %}">Edit</a>
+    <a href="{% url 'task' %}">Back to list</a>
+</body>
+
+</html>
+
+{% endblock %}
