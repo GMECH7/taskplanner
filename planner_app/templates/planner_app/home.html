@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %} Home Page {% endblock %}
+{% block title %} Home {% endblock %}
 {%block content%}
-<p>This is the home page</p>
+{% if user.is_authenticated %}
+<a href="{% url 'task' %}" class="btn btn-primary">Back to list</a>
+{% endif %}
 {% endblock %}

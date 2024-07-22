@@ -1,26 +1,55 @@
-{% extends "base.html "%}
+{% extends "base.html" %}
 
 {% block content %}
 <html>
 
 <head>
     <title>{{ task.title }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>{{ task.title }}</h1>
-    <p>{{ task.description }}</p>
-    <p>Category: {{ task.category }}</p>
-    {% if task.alternative_category %}
-    <p>Alternative Category: {{ task.alternative_category }}</p>
-    {% endif %}
-    <p>Status: {{ task.get_status_display }}</p>
-    <p>Date Created: {{ task.date_created }}</p>
-    {% if task.date_closed %}
-    <p>Date Closed: {{ task.date_closed }}</p>
-    {% endif %}
-    <a href="{% url 'task_edit' task.pk %}">Edit</a>
-    <a href="{% url 'task' %}">Back to list</a>
+    <div class="container">
+        <h1>{{ task.title }}</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Title</th>
+                <td>{{ task.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ task.description }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ task.category }}</td>
+            </tr>
+            {% if task.alternative_category %}
+            <tr>
+                <th>Alternative Category</th>
+                <td>{{ task.alternative_category }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Status</th>
+                <td>{{ task.get_status_display }}</td>
+            </tr>
+            <tr>
+                <th>Date Created</th>
+                <td>{{ task.date_created }}</td>
+            </tr>
+            {% if task.date_closed %}
+            <tr>
+                <th>Date Closed</th>
+                <td>{{ task.date_closed }}</td>
+            </tr>
+            {% endif %}
+        </table>
+        <div class="btn-group" role="group" aria-label="Task Actions">
+            <a href="{% url 'task_edit' task.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'task' %}" class="btn btn-secondary">Back to list</a>
+        </div>
+    </div>
 </body>
 
 </html>

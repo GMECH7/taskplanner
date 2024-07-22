@@ -1,0 +1,29 @@
+{% extends "base.html "%} {% block title %} Categories (to be deleted){% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Tasks' categories</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description|truncatechars:50 }}</td>
+                <td>
+                    <a href="" class="btn btn-sm btn-info">View/Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'category_create' %}" class="btn btn-success mt-3">Add New Category</a>
+</div>
+{% endblock %}
