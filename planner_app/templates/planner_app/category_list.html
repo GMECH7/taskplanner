@@ -1,6 +1,4 @@
-{% extends "base.html "%} {% block title %} Categories (to be deleted){% endblock %}
-
-{% block content %}
+{% extends "base.html "%} {% block title %} Categories (to be deleted){%endblock %} {% block content %}
 <div class="container">
     <h1 class="text-center">Tasks' categories</h1>
 
@@ -24,6 +22,6 @@
         </tbody>
     </table>
 
-    <a href="{% url 'category_create' %}" class="btn btn-success mt-3">Add New Category</a>
+    {% include 'planner_app/button_row.html' with url='task_create' text="Add New Category" back_url='home' %}
 </div>
 {% endblock %}

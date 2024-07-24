@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-{% block title %} Task Page {% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Task Page {% endblock %} {% block content %}
 <div class="container">
     <h1 class="text-left">List of tasks</h1>
 
@@ -11,19 +8,22 @@
                 <th>Title</th>
                 <!-- <th>Desciption</th> -->
                 <th>
-                    <form method="get" style="display:inline;">
+                    <form method="get" style="display: inline">
                         <input type="hidden" name="sort_by_task_category"
-                            value="{% if request.GET.sort_by_task_category == 'category' %}unsorted{% else %}category{% endif %}">
+                            value="{% if request.GET.sort_by_task_category == 'category' %}unsorted{% else %}category{% endif %}" />
                         <!-- change between sorted and unsorted -->
                         <button type="submit" class="btn btn-link"
-                            style="padding:0; border:none; background:none; color:inherit;">Category</button>
+                            style="padding: 0; border: none; background: none; color: inherit">
+                            Category
+                        </button>
                     </form>
                 </th>
                 <th>Alternative Category</th>
                 <th>Status</th>
                 <!-- <th>Date Created</th>
                 <th>Date Closed</th> -->
-                <th>Actions</th> <!-- New column for actions -->
+                <th>Actions</th>
+                <!-- New column for actions -->
             </tr>
         </thead>
         <tbody>
@@ -38,19 +38,18 @@
                 <td>{{ task.date_closed|default_if_none:"-" }}</td> -->
                 <td>
                     <div class="btn-group" role="group" aria-label="Task Actions"></div>
-                    <form action="{% url 'task_detail' task.pk %}" method="get" style="display: inline;">
-                        <button type="submit" class="btn  btn-info">Details</button>
+                    <form action="{% url 'task_detail' task.pk %}" method="get" style="display: inline">
+                        <button type="submit" class="btn btn-info">Details</button>
                     </form>
-                    <form action="{% url 'task_delete' task.pk %}" method="get" style="display: inline;">
+                    <form action="{% url 'task_delete' task.pk %}" method="get" style="display: inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn  btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{% url 'task_create' %}" class="btn btn-success mt-3">Add New Task</a>
+    {% include 'planner_app/button_row.html' with url='task_create' text="Add New Category" back_url='home' %}
 </div>
 {% endblock %}

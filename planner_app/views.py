@@ -22,9 +22,8 @@ def task(request):
     if sort_by_task_category == "category":
         tasks = tasks.order_by("-category")  # Sort tasks alphabetically by category
 
-    context = {
-        "tasks": tasks,
-    }
+    # the last two key-value pairs are used in the button_row_create_back template
+    context = {"tasks": tasks, "task_create_url": "task_create", "home_url": "home"}
     return render(request, "planner_app/task_list.html", context)
 
 
