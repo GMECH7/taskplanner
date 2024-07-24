@@ -4,6 +4,7 @@ from .models import TaskItem, TaskCategory
 from .forms import TaskForm, CategoryForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 # Create your views here.
@@ -29,6 +30,7 @@ def task(request):
 
 @login_required
 def task_detail(request, pk):
+    """ """
     task = get_object_or_404(TaskItem, pk=pk)
     return render(request, "planner_app/task_detail.html", {"task": task})
 
@@ -63,6 +65,18 @@ def task_edit(request, pk):
     else:
         form = TaskForm(request.user, instance=task)
     return render(request, "planner_app/task_form.html", {"form": form})
+
+
+@login_required(login_url="login")
+def task_delete(request, pk):
+    """task deletion"""
+    task = get_object_or_404(TaskItem, pk=pk)
+    print(request.method)
+    if request.method == "POST":
+        task.delete()
+        messages.success(request, "Task deleted successfully.")
+        return redirect("task")
+    return render(request, "planner_app/task_delete.html", {"task": task})
 
 
 @login_required

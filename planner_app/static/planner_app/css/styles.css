@@ -1,0 +1,12 @@
+.action-cell {
+    padding: 0;
+}
+
+.btn-full {
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-align: left; /* Ensures the text is centered */
+    background-color: orange; /* Sets the button background color to orange */
+    border-color: orange; /* Ensures the button border matches the background color */
+}

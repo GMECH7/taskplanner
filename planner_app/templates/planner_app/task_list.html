@@ -1,14 +1,15 @@
-{% extends "base.html "%} {% block title %} Task Page (to be deleted){% endblock %}
+{% extends "base.html" %}
+{% block title %} Task Page {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">List of tasks</h1>
+    <h1 class="text-left">List of tasks</h1>
 
-    <table class="table table-bordered">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Description</th>
+                <!-- <th>Desciption</th> -->
                 <th>
                     <form method="get" style="display:inline;">
                         <input type="hidden" name="sort_by_task_category"
@@ -20,8 +21,8 @@
                 </th>
                 <th>Alternative Category</th>
                 <th>Status</th>
-                <th>Date Created</th>
-                <th>Date Closed</th>
+                <!-- <th>Date Created</th>
+                <th>Date Closed</th> -->
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
         </thead>
@@ -29,14 +30,21 @@
             {% for task in tasks %}
             <tr>
                 <td>{{ task.title }}</td>
-                <td>{{ task.description|truncatechars:50 }}</td>
+                <!-- <td>{{ task.description|truncatechars:50 }}</td> -->
                 <td>{{ task.category }}</td>
                 <td>{{ task.alternative_category|default_if_none:"-" }}</td>
                 <td>{{ task.get_status_display }}</td>
-                <td>{{ task.date_created }}</td>
-                <td>{{ task.date_closed|default_if_none:"-" }}</td>
+                <!-- <td>{{ task.date_created }}</td>
+                <td>{{ task.date_closed|default_if_none:"-" }}</td> -->
                 <td>
-                    <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-info">View/Edit</a>
+                    <div class="btn-group" role="group" aria-label="Task Actions"></div>
+                    <form action="{% url 'task_detail' task.pk %}" method="get" style="display: inline;">
+                        <button type="submit" class="btn  btn-info">Details</button>
+                    </form>
+                    <form action="{% url 'task_delete' task.pk %}" method="get" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn  btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

@@ -6,12 +6,12 @@
 <div style="text-align: center;">
     <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Task</h1>
 
-    <form method="post" style="display: inline-block; text-align: left; width: 400px;">
+    <form method="post" style="display: inline-block; text-align: left">
         {% csrf_token %}
 
         {% for field in form %}
         <div class="form-group" style="margin-bottom: 10px;">
-            <label for="{{ field.id_for_label }}" style="width: 100%; margin-bottom: 5px;">{{ field.label }}</label><br>
+            <label for="{{ field.id_for_label }}" style="width: 400px; margin-bottom: 0px;">{{field.label}}</label><br>
             {{ field }}
         </div>
         {% endfor %}
