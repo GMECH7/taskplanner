@@ -1,5 +1,6 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path("category/<int:pk>/", views.category_detail, name="category_detail"),
     path("category/new/", views.category_create, name="category_create"),
     path("category/<int:pk>/edit/", views.task_edit, name="category_edit"),
+    path("category/<int:pk>/delete/", views.category_delete, name="category_delete"),
 ]

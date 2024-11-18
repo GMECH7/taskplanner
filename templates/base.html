@@ -18,6 +18,11 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{% url 'home' %}">TaskPlanner</a>
+        {% if user.is_authenticated %}
+        <!-- Adding Tasks and Categories links -->
+        <a class="nav-link" href="{% url 'task' %}">Tasks</a>
+        <a class="nav-link" href="{% url 'category' %}">Categories</a>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>

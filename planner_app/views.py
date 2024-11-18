@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .models import TaskItem, TaskCategory
-from .forms import TaskForm, CategoryForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import CategoryForm, TaskForm
+from .models import TaskCategory, TaskItem
 
 
 # Create your views here.
@@ -70,7 +71,6 @@ def task_edit(request, pk):
 def task_delete(request, pk):
     """task deletion"""
     task = get_object_or_404(TaskItem, pk=pk)
-    print(request.method)
     if request.method == "POST":
         task.delete()
         messages.success(request, "Task deleted successfully.")
@@ -139,6 +139,17 @@ def category_edit(request, pk):
     else:
         form = CategoryForm(request.user, instance=category)
     return render(request, "planner_app/category_form.html", {"form": form})
+
+
+@login_required(login_url="login")
+def category_delete(request, pk):
+    """category deletion"""
+    category = get_object_or_404(TaskCategory, pk=pk)
+    if request.method == "POST":
+        category.delete()
+        messages.success(request, "Category deleted successfully.")
+        return redirect("category")
+    return render(request, "planner_app/category_delete.html", {"category": category})
 
 
 def custom_login(request):

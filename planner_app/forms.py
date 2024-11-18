@@ -1,5 +1,6 @@
 from django import forms
-from .models import TaskItem, TaskCategory
+
+from .models import TaskCategory, TaskItem
 
 
 class TaskForm(forms.ModelForm):

@@ -2,11 +2,12 @@
 <div class="container">
     <h1 class="text-center">Tasks' categories</h1>
 
-    <table class="table table-bordered">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>Category</th>
                 <th>Description</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -15,13 +16,20 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.description|truncatechars:50 }}</td>
                 <td>
-                    <a href="" class="btn btn-sm btn-info">View/Edit</a>
+                    <div class="btn-group" role="group" aria-label="Task Actions"></div>
+                    <form action="{% url 'category_detail' category.pk %}" method="get" style="display: inline">
+                        <button type="submit" class="btn btn-info">Details</button>
+                    </form>
+                    <form action="{% url 'category_delete' category.pk %}" method="get" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    {% include 'planner_app/button_row.html' with url='task_create' text="Add New Category" back_url='home' %}
+    {% include 'planner_app/button_row.html' with url='category_create' text="Add New Category" back_url='home' %}
 </div>
 {% endblock %}
