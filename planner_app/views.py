@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import CategoryForm, TaskForm
+from .forms import CategoryForm, RegisterNewUserForm, TaskForm
 from .models import TaskCategory, TaskItem
 
 
@@ -150,6 +150,26 @@ def category_delete(request, pk):
         messages.success(request, "Category deleted successfully.")
         return redirect("category")
     return render(request, "planner_app/category_delete.html", {"category": category})
+
+
+def custom_register(request):
+    if request.method == "POST":
+        form = RegisterNewUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            messages.success(
+                request, f"Account created for {username}! You can now log in."
+            )
+            return redirect("login")  # Redirect to login after successful registration
+        else:
+            print(form.errors)  # Print errors to the console for debugging
+            redirect("register")
+    else:
+        form = RegisterNewUserForm()
+
+    context = {"form": form}
+    return render(request, "planner_app/register.html", context)
 
 
 def custom_login(request):

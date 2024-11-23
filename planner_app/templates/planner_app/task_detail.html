@@ -1,57 +1,56 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <html>
-
-<head>
+  <head>
     <title>{{ task.title }}</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>{{ task.title }}</h1>
-        <table class="table table-bordered">
-            <tr>
-                <th>Title</th>
-                <td>{{ task.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ task.description }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ task.category }}</td>
-            </tr>
-            {% if task.alternative_category %}
-            <tr>
-                <th>Alternative Category</th>
-                <td>{{ task.alternative_category }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Status</th>
-                <td>{{ task.get_status_display }}</td>
-            </tr>
-            <tr>
-                <th>Date Created</th>
-                <td>{{ task.date_created }}</td>
-            </tr>
-            {% if task.date_closed %}
-            <tr>
-                <th>Date Closed</th>
-                <td>{{ task.date_closed }}</td>
-            </tr>
-            {% endif %}
-        </table>
-        <div class="btn-group" role="group" aria-label="Task Actions">
-            <a href="{% url 'task_edit' task.pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'task' %}" class="btn btn-secondary">Back to list</a>
-        </div>
+      <h1>{{ task.title }}</h1>
+      <table class="table table-bordered">
+        <tr>
+          <th>Title</th>
+          <td>{{ task.title }}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td>{{ task.description }}</td>
+        </tr>
+        <tr>
+          <th>Category</th>
+          <td>{{ task.category }}</td>
+        </tr>
+        {% if task.alternative_category %}
+        <tr>
+          <th>Alternative Category</th>
+          <td>{{ task.alternative_category }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <th>Status</th>
+          <td>{{ task.get_status_display }}</td>
+        </tr>
+        <tr>
+          <th>Date Created</th>
+          <td>{{ task.date_created }}</td>
+        </tr>
+        {% if task.date_closed %}
+        <tr>
+          <th>Date Closed</th>
+          <td>{{ task.date_closed }}</td>
+        </tr>
+        {% endif %}
+      </table>
+      <div class="btn-group" role="group" aria-label="Task Actions">
+        <a href="{% url 'task_edit' task.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'task' %}" class="btn btn-secondary">Back to list</a>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
 
 {% endblock %}

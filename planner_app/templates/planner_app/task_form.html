@@ -6,18 +6,87 @@
 <div style="text-align: center;">
     <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Task</h1>
 
-    <form method="post" style="display: inline-block; text-align: left">
+    <form method="post">
         {% csrf_token %}
 
-        {% for field in form %}
-        <div class="form-group" style="margin-bottom: 10px;">
-            <label for="{{ field.id_for_label }}" style="width: 400px; margin-bottom: 0px;">{{field.label}}</label><br>
-            {{ field }}
+        <!-- Title (CharField) -->
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            <input type="text" name="title" id="id_title" class="form-control"
+                value="{{ form.title.value|default_if_none:'' }}">
+            {% for error in form.title.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
         </div>
-        {% endfor %}
 
-        <div class="btn-group" style="margin-top: 10px;">
-            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Save</button>
+        <!-- Description (TextField) -->
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            <textarea name="description" id="id_description"
+                class="form-control">{{ form.description.value|default_if_none:'' }}</textarea>
+            {% for error in form.description.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+ 
+        <!-- Category (ForeignKey) -->
+        <div class="mb-3">
+            <label for="id_category" class="form-label">Category</label>
+            <select name="category" id="id_category" class="form-control">
+                {% for choice in form.category.field.choices %}
+                <option value="{{ choice.0 }}" {% if choice.0 == form.category.value %} selected {% endif %}>
+                    {{ choice.1 }}
+                </option>
+                {% endfor %}
+            </select>
+            {% for error in form.category.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Alternative Category (ForeignKey) -->
+        <div class="mb-3">
+            <label for="id_alternative_category" class="form-label">Alternative Category</label>
+            <select name="alternative_category" id="id_alternative_category" class="form-control">
+                {% for choice in form.alternative_category.field.choices %}
+                <option value="{{ choice.0 }}" {% if choice.0 == form.alternative_category.value %}selected{% endif %}>
+                    {{ choice.1 }}
+                </option>
+                {% endfor %}
+            </select>
+            {% for error in form.alternative_category.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div> 
+
+        <!-- Status (ChoiceField) -->
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Status</label>
+            <select name="status" id="id_status" class="form-control">
+                {% for choice in form.status.field.choices %}
+                <option value="{{ choice.0 }}" {% if choice.0 == form.status.value %}selected{% endif %}>
+                    {{ choice.1 }}
+                </option>
+                {% endfor %}
+            </select>
+            {% for error in form.status.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Date Closed (DateTimeField) -->
+        <div class="mb-3">
+            <label for="id_date_closed" class="form-label">Date Closed</label>
+            <input type="datetime-local" name="date_closed" id="id_date_closed" class="form-control"
+                value="{{ form.date_closed.value|default_if_none:'' }}">
+            {% for error in form.date_closed.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">Save</button>
             <a href="{% url 'task' %}" class="btn btn-secondary">Cancel</a>
         </div>
 
