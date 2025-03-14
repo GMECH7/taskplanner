@@ -1,35 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="text-align: center">
-  <h1>
-    {% if form.instance.pk %}
-    Edit
-    {% else %}
-    New
-    {% endif %}
-    Category
-  </h1>
-  <form method="post">
-    {% csrf_token %}
-    <!-- Title (CharField) -->
-    <div class="mb-3">
-      <label for="id_name" class="form-label">Title</label>
-      <input type="text" name="name" id="id_name" class="form-control"
-        value="{{ form.title.value|default_if_none:'' }}" />
-      {% for error in form.name.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
-    </div>
-    <!-- Description (TextField) -->
-    <div class="mb-3">
-      <label for="id_description" class="form-label">Description</label>
-      <textarea name="description" id="id_description" class="form-control">
+  <div style="text-align: center">
+    <h1>
+      {% if form.instance.pk %}
+        Edit
+      {% else %}
+        New
+      {% endif %}
+      Category
+    </h1>
+    <form method="post">
+      {% csrf_token %}
+      <!-- Title (CharField) -->
+      <div class="mb-3">
+        <label for="id_name" class="form-label">Title</label>
+        <input type="text"
+               name="name"
+               id="id_name"
+               class="form-control"
+               value="{{ form.title.value|default_if_none:'' }}" />
+        {% for error in form.name.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+      </div>
+      <!-- Description (TextField) -->
+      <div class="mb-3">
+        <label for="id_description" class="form-label">Description</label>
+        <textarea name="description" id="id_description" class="form-control">
       {{ form.description.value|default_if_none:'' }}</textarea>
-      {% for error in form.description.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
-    </div>
-    <!-- Submit and Cancel Buttons -->
-    <div class="btn-group">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <a href="{% url 'category' %}" class="btn btn-danger">Cancel</a>
-    </div>
-  </form>
-</div>
+        {% for error in form.description.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+      </div>
+      <!-- Submit and Cancel Buttons -->
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'category' %}" class="btn btn-danger">Cancel</a>
+      </div>
+    </form>
+  </div>
 {% endblock %}

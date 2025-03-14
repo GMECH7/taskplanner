@@ -158,9 +158,7 @@ def custom_register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get("username")
-            messages.success(
-                request, f"Account created for {username}! You can now log in."
-            )
+            messages.success(request, f"Account created for {username}!")
             return redirect("login")  # Redirect to login after successful registration
         else:
             print(form.errors)  # Print errors to the console for debugging

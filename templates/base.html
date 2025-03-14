@@ -1,54 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        {% block title %}
-        This is a Django template block that can be overridden in child templates to set a custom title for each page
-        {% endblock %}
-    </title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        rel="stylesheet" />
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'planner_app/css/styles.css' %}">
-</head>
-
-<body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{% url 'home' %}">TaskPlanner</a>
-            {% if user.is_authenticated %}
-            <!-- Adding Tasks and Categories links -->
-            <a class="nav-link" href="{% url 'task' %}">Tasks</a>
-            <a class="nav-link" href="{% url 'category' %}">Categories</a>
-            {% endif %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    {% endif %}
-
-                    {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}
+                This is a Django template block that can be overridden in child templates to set a custom title for each page
+            {% endblock %}
+        </title>
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              rel="stylesheet" />
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'planner_app/css/styles.css' %}">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{% url 'home' %}">TaskPlanner</a>
+                {% if user.is_authenticated %}
+                    <!-- Adding Tasks and Categories links -->
+                    <a class="nav-link" href="{% url 'task' %}">Tasks</a>
+                    <a class="nav-link" href="{% url 'category' %}">Categories</a>
+                {% endif %}
+                <button class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+                {% if messages %}
+                    {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
             </div>
-        </nav>
-
-        <div class="container">{% block content %} {% endblock %}</div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    </div>
-</body>
-
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </body>
 </html>
